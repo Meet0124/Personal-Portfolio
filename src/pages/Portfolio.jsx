@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   HiSun,
   HiMoon,
@@ -16,6 +16,66 @@ import ContactForm from "../components/ContactForm";
 const Portfolio = () => {
   const { isDark, toggleTheme } = useTheme();
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [currentTitle, setCurrentTitle] = useState(0);
+  const [currentProject, setCurrentProject] = useState(0);
+  const [direction, setDirection] = useState(0);
+  
+  const titles = [
+    "Full-Stack Developer & AI Enthusiast",
+    "Problem Solver & Creative Thinker",
+    "Tech Explorer & Innovation Driver"
+  ];
+
+  const projects = [
+    {
+      icon: "💻",
+      title: "SyncDesk",
+      subtitle: "Real-Time Collaboration Platform",
+      description:
+        "Real-time collaborative editor with WebSocket technology, Monaco Editor integration, and role-based access control.",
+      tags: ["React.js", "Socket.io", "Node.js", "MongoDB"],
+      gradient: "from-blue-500 via-blue-600 to-blue-700",
+      achievement: "✨ 40% efficiency improvement",
+    },
+    {
+      icon: "🤖",
+      title: "TaskMind.AI",
+      subtitle: "AI-Powered Content Platform",
+      description:
+        "Full-stack AI platform with content generation, resume analysis, and image creation using Gemini & Clipdrop APIs.",
+      tags: ["PERN Stack", "AI APIs", "Clerk"],
+      gradient: "from-purple-500 via-pink-500 to-pink-600",
+      achievement: "✨ 99% uptime on Vercel",
+    },
+    {
+      icon: "🔍",
+      title: "Project Satya",
+      subtitle: "Fake News Detection",
+      description:
+        "ML model using TF-IDF and Logistic Regression for fake news classification with Flask web integration.",
+      tags: ["Python", "scikit-learn", "Flask"],
+      gradient: "from-green-500 via-teal-500 to-cyan-600",
+      achievement: "✨ 92% accuracy, <200ms latency",
+    },
+    {
+      icon: "🔎",
+      title: "Horizon",
+      subtitle: "AI Code Reviewer",
+      description:
+        "Intelligent code review platform powered by Gemini API that analyzes code quality, suggests improvements, and identifies potential bugs.",
+      tags: ["React.js", "Gemini API", "AI"],
+      gradient: "from-cyan-500 via-blue-500 to-indigo-600",
+      achievement: "✨ AI-powered code analysis",
+    },
+  ];
+
+  // Typewriter effect for titles
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentTitle((prev) => (prev + 1) % titles.length);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
 
   // Smooth mouse tracking for parallax
   useEffect(() => {
@@ -326,93 +386,6 @@ const Portfolio = () => {
         >
           <div className="max-w-7xl mx-auto w-full">
             <div className="text-center relative">
-              {/* Avatar with Holographic Effect */}
-              <motion.div
-                initial={{ opacity: 0, scale: 0, rotateY: -180 }}
-                animate={{ opacity: 1, scale: 1, rotateY: 0 }}
-                transition={{ duration: 1.2, ease: [0.6, -0.05, 0.01, 0.99] }}
-                className="mb-16 relative inline-block"
-              >
-                {/* Rotating Rings */}
-                {[...Array(3)].map((_, i) => (
-                  <motion.div
-                    key={i}
-                    className="absolute inset-0 rounded-full"
-                    style={{
-                      width: 180 + i * 30,
-                      height: 180 + i * 30,
-                      border: "2px solid",
-                      borderColor: isDark
-                        ? [
-                            "rgba(96,165,250,0.3)",
-                            "rgba(167,139,250,0.3)",
-                            "rgba(236,72,153,0.3)",
-                          ][i]
-                        : [
-                            "rgba(59,130,246,0.3)",
-                            "rgba(139,92,246,0.3)",
-                            "rgba(236,72,153,0.3)",
-                          ][i],
-                      left: "50%",
-                      top: "50%",
-                      transform: "translate(-50%, -50%)",
-                    }}
-                    animate={{
-                      rotate: i % 2 === 0 ? 360 : -360,
-                      scale: [1, 1.1, 1],
-                    }}
-                    transition={{
-                      duration: 20 - i * 5,
-                      repeat: Infinity,
-                      ease: "linear",
-                    }}
-                  />
-                ))}
-
-                <motion.div
-                  animate={{
-                    boxShadow: [
-                      "0 0 60px rgba(59, 130, 246, 0.6), 0 0 120px rgba(147, 51, 234, 0.4)",
-                      "0 0 80px rgba(147, 51, 234, 0.6), 0 0 140px rgba(236, 72, 153, 0.4)",
-                      "0 0 70px rgba(236, 72, 153, 0.6), 0 0 130px rgba(16, 185, 129, 0.4)",
-                      "0 0 60px rgba(59, 130, 246, 0.6), 0 0 120px rgba(147, 51, 234, 0.4)",
-                    ],
-                  }}
-                  transition={{
-                    duration: 4,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                  }}
-                  className="relative w-48 h-48 rounded-full bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 flex items-center justify-center text-white text-7xl font-black overflow-hidden"
-                >
-                  <motion.div
-                    className="absolute inset-0 opacity-50"
-                    animate={{
-                      background: [
-                        "linear-gradient(45deg, rgba(255,255,255,0.1) 0%, transparent 100%)",
-                        "linear-gradient(90deg, rgba(255,255,255,0.1) 0%, transparent 100%)",
-                        "linear-gradient(135deg, rgba(255,255,255,0.1) 0%, transparent 100%)",
-                        "linear-gradient(45deg, rgba(255,255,255,0.1) 0%, transparent 100%)",
-                      ],
-                    }}
-                    transition={{ duration: 3, repeat: Infinity }}
-                  />
-
-                  <motion.div
-                    className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent"
-                    animate={{ x: ["-200%", "200%"] }}
-                    transition={{
-                      duration: 2,
-                      repeat: Infinity,
-                      ease: "linear",
-                      repeatDelay: 1,
-                    }}
-                  />
-
-                  <span className="relative z-10">MA</span>
-                </motion.div>
-              </motion.div>
-
               <motion.h1
                 initial={{ opacity: 0, y: 50 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -437,13 +410,14 @@ const Portfolio = () => {
                 className="mb-6"
               >
                 <motion.p
-                  animate={{
-                    scale: [1, 1.02, 1],
-                  }}
-                  transition={{ duration: 3, repeat: Infinity }}
+                  key={currentTitle}
+                  initial={{ opacity: 0, x: -100 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: 100 }}
+                  transition={{ duration: 0.5 }}
                   className="text-3xl md:text-4xl font-bold text-gray-700 dark:text-gray-200 mb-3"
                 >
-                  Full-Stack Developer & AI Enthusiast
+                  {titles[currentTitle]}
                 </motion.p>
               </motion.div>
 
@@ -553,7 +527,28 @@ const Portfolio = () => {
               />
             </motion.div>
 
-            <div className="grid md:grid-cols-2 gap-12">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              className="max-w-4xl mx-auto text-center"
+            >
+              <div className="prose prose-lg dark:prose-invert mx-auto">
+                <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-6">
+                  I'm someone who loves to create, explore, and learn — the kind of person who can spend hours chasing an idea just to see it come to life. Whether it's experimenting with a new framework, building something with AI, or fixing that one stubborn bug at 2 a.m., I enjoy the process as much as the outcome.
+                </p>
+                <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-6">
+                  Technology, to me, isn't just code — it's a way to express creativity, solve real problems, and keep pushing what's possible. I'm driven by curiosity, powered by coffee, and always looking for the next thing to build or understand.
+                </p>
+                <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
+                  When I'm not behind the screen, you'll probably find me talking football strategies, catching an F1 race, or diving into a good podcast — anything that keeps the mind moving and the ideas flowing.
+                </p>
+              </div>
+            </motion.div>
+
+            {/* Education & Certifications Section */}
+            <div className="grid md:grid-cols-2 gap-12 mt-24">
               {/* Education Card */}
               <motion.div
                 initial={{ opacity: 0, x: -100, rotateY: -20 }}
@@ -777,143 +772,166 @@ const Portfolio = () => {
               />
             </motion.div>
 
-            <div className="grid md:grid-cols-3 gap-12">
-              {[
-                {
-                  icon: "💻",
-                  title: "SyncDesk",
-                  subtitle: "Real-Time Collaboration Platform",
-                  description:
-                    "Real-time collaborative editor with WebSocket technology, Monaco Editor integration, and role-based access control.",
-                  tags: ["React.js", "Socket.io", "Node.js", "MongoDB"],
-                  gradient: "from-blue-500 via-blue-600 to-blue-700",
-                  achievement: "✨ 40% efficiency improvement",
-                },
-                {
-                  icon: "🤖",
-                  title: "TaskMind.AI",
-                  subtitle: "AI-Powered Content Platform",
-                  description:
-                    "Full-stack AI platform with content generation, resume analysis, and image creation using Gemini & Clipdrop APIs.",
-                  tags: ["PERN Stack", "AI APIs", "Clerk"],
-                  gradient: "from-purple-500 via-pink-500 to-pink-600",
-                  achievement: "✨ 99% uptime on Vercel",
-                },
-                {
-                  icon: "🔍",
-                  title: "Project Satya",
-                  subtitle: "Fake News Detection",
-                  description:
-                    "ML model using TF-IDF and Logistic Regression for fake news classification with Flask web integration.",
-                  tags: ["Python", "scikit-learn", "Flask"],
-                  gradient: "from-green-500 via-teal-500 to-cyan-600",
-                  achievement: "✨ 92% accuracy, <200ms latency",
-                },
-              ].map((project, index) => (
-                <motion.div
-                  key={project.title}
-                  initial={{ opacity: 0, y: 100, rotateX: -20 }}
-                  whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.2, duration: 1 }}
-                  whileHover={{
-                    y: -30,
-                    scale: 1.05,
-                    rotateY: 5,
-                    transition: { duration: 0.4 },
-                  }}
-                  className="group relative rounded-3xl overflow-hidden shadow-2xl"
-                  style={{ transformStyle: "preserve-3d", perspective: 1000 }}
-                >
-                  <div className="relative bg-white/90 dark:bg-gray-800/90 backdrop-blur-xl border border-white/20 dark:border-gray-700/20 h-full">
-                    <motion.div
-                      whileHover={{ scale: 1.1 }}
-                      transition={{ duration: 0.5 }}
-                      className={`relative h-64 bg-gradient-to-br ${project.gradient} flex items-center justify-center overflow-hidden`}
-                    >
-                      <motion.div
-                        animate={{
-                          rotate: [0, 360],
-                          scale: [1, 1.3, 1],
-                        }}
-                        transition={{
-                          duration: 25,
-                          repeat: Infinity,
-                          ease: "linear",
-                        }}
-                        className="absolute inset-0 opacity-20"
-                        style={{
-                          backgroundImage:
-                            "radial-gradient(circle, rgba(255,255,255,0.3) 1px, transparent 1px)",
-                          backgroundSize: "30px 30px",
-                        }}
-                      />
+            {/* Projects Grid with Side Navigation */}
+            <div className="relative flex items-center gap-8">
+              {/* Left Navigation Button */}
+              <motion.button
+                onClick={() => {
+                  setDirection(-1);
+                  setCurrentProject((prev) => (prev - 1 + projects.length) % projects.length);
+                }}
+                whileHover={{ scale: 1.15, x: -5 }}
+                whileTap={{ scale: 0.9 }}
+                className="w-20 h-20 bg-white dark:bg-gray-800 rounded-full shadow-2xl flex items-center justify-center text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors border-4 border-white/20 dark:border-gray-700/20 z-10"
+              >
+                <span className="text-4xl font-bold">←</span>
+              </motion.button>
 
-                      <motion.div
-                        className="text-8xl relative z-10"
-                        whileHover={{ scale: 1.3, rotate: 15 }}
-                        transition={{ type: "spring", stiffness: 300 }}
-                      >
-                        {project.icon}
-                      </motion.div>
-
-                      <motion.div
-                        className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
-                        animate={{ x: ["-200%", "200%"] }}
-                        transition={{
-                          duration: 3,
-                          repeat: Infinity,
-                          ease: "linear",
-                          repeatDelay: 2,
-                        }}
-                      />
-                    </motion.div>
-
-                    <div className="p-10">
-                      <h3 className="text-3xl font-black mb-3 text-gray-800 dark:text-gray-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                        {project.title}
-                      </h3>
-                      <p className="text-base text-blue-600 dark:text-blue-400 mb-6 font-bold">
-                        {project.subtitle}
-                      </p>
-                      <p className="text-gray-600 dark:text-gray-300 mb-8 leading-relaxed text-lg">
-                        {project.description}
-                      </p>
-
-                      <div className="flex flex-wrap gap-3 mb-8">
-                        {project.tags.map((tag, i) => (
-                          <motion.span
-                            key={tag}
-                            initial={{ opacity: 0, scale: 0 }}
-                            whileInView={{ opacity: 1, scale: 1 }}
-                            viewport={{ once: true }}
-                            transition={{
-                              delay: index * 0.2 + i * 0.1,
-                              type: "spring",
-                            }}
-                            whileHover={{ scale: 1.15, y: -3 }}
-                            className={`px-5 py-2 bg-gradient-to-r ${project.gradient} text-white rounded-full text-sm font-bold shadow-md hover:shadow-xl`}
-                          >
-                            {tag}
-                          </motion.span>
-                        ))}
-                      </div>
-
-                      <div className="flex items-center gap-2 text-base text-gray-700 dark:text-gray-300 font-bold bg-gray-100 dark:bg-gray-700 px-6 py-3 rounded-xl">
-                        <HiLightningBolt
-                          className="text-yellow-500"
-                          size={20}
-                        />
-                        {project.achievement}
-                      </div>
-                    </div>
-                  </div>
-
+              {/* 3 Projects Grid with AnimatePresence */}
+              <div className="relative flex-1 overflow-hidden">
+                <AnimatePresence mode="wait" initial={false} custom={direction}>
                   <motion.div
-                    className={`absolute inset-0 bg-gradient-to-r ${project.gradient} opacity-0 group-hover:opacity-20 transition-opacity duration-500 blur-2xl -z-10`}
-                  />
-                </motion.div>
-              ))}
+                    key={currentProject}
+                    custom={direction}
+                    initial={{ 
+                      x: direction > 0 ? 1000 : -1000,
+                      opacity: 0 
+                    }}
+                    animate={{ 
+                      x: 0,
+                      opacity: 1 
+                    }}
+                    exit={{ 
+                      x: direction > 0 ? -1000 : 1000,
+                      opacity: 0 
+                    }}
+                    transition={{ 
+                      duration: 0.5,
+                      ease: "easeInOut"
+                    }}
+                    className="grid md:grid-cols-3 gap-8"
+                  >
+                    {projects.slice(currentProject, currentProject + 3).concat(
+                      projects.slice(0, Math.max(0, (currentProject + 3) - projects.length))
+                    ).map((project, index) => (
+                      <motion.div
+                        key={project.title}
+                        initial={{ opacity: 0, y: 50 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: index * 0.1, duration: 0.4 }}
+                        whileHover={{
+                          y: -30,
+                          scale: 1.05,
+                          rotateY: 5,
+                          transition: { duration: 0.4 },
+                        }}
+                        className="group relative rounded-3xl overflow-hidden shadow-2xl"
+                        style={{ transformStyle: "preserve-3d", perspective: 1000 }}
+                      >
+                        <div className="relative bg-white/90 dark:bg-gray-800/90 backdrop-blur-xl border border-white/20 dark:border-gray-700/20 h-full">
+                          <motion.div
+                            whileHover={{ scale: 1.1 }}
+                            transition={{ duration: 0.5 }}
+                            className={`relative h-64 bg-gradient-to-br ${project.gradient} flex items-center justify-center overflow-hidden`}
+                          >
+                            <motion.div
+                              animate={{
+                                rotate: [0, 360],
+                                scale: [1, 1.3, 1],
+                              }}
+                              transition={{
+                                duration: 25,
+                                repeat: Infinity,
+                                ease: "linear",
+                              }}
+                              className="absolute inset-0 opacity-20"
+                              style={{
+                                backgroundImage:
+                                  "radial-gradient(circle, rgba(255,255,255,0.3) 1px, transparent 1px)",
+                                backgroundSize: "30px 30px",
+                              }}
+                            />
+
+                            <motion.div
+                              className="text-8xl relative z-10"
+                              whileHover={{ scale: 1.3, rotate: 15 }}
+                              transition={{ type: "spring", stiffness: 300 }}
+                            >
+                              {project.icon}
+                            </motion.div>
+
+                            <motion.div
+                              className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
+                              animate={{ x: ["-200%", "200%"] }}
+                              transition={{
+                                duration: 3,
+                                repeat: Infinity,
+                                ease: "linear",
+                                repeatDelay: 2,
+                              }}
+                            />
+                          </motion.div>
+
+                          <div className="p-10">
+                            <h3 className="text-3xl font-black mb-3 text-gray-800 dark:text-gray-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                              {project.title}
+                            </h3>
+                            <p className="text-base text-blue-600 dark:text-blue-400 mb-6 font-bold">
+                              {project.subtitle}
+                            </p>
+                            <p className="text-gray-600 dark:text-gray-300 mb-8 leading-relaxed text-lg">
+                              {project.description}
+                            </p>
+
+                            <div className="flex flex-wrap gap-3 mb-8">
+                              {project.tags.map((tag, i) => (
+                                <motion.span
+                                  key={tag}
+                                  initial={{ opacity: 0, scale: 0 }}
+                                  animate={{ opacity: 1, scale: 1 }}
+                                  transition={{
+                                    delay: i * 0.1,
+                                    type: "spring",
+                                  }}
+                                  whileHover={{ scale: 1.15, y: -3 }}
+                                  className={`px-5 py-2 bg-gradient-to-r ${project.gradient} text-white rounded-full text-sm font-bold shadow-md hover:shadow-xl`}
+                                >
+                                  {tag}
+                                </motion.span>
+                              ))}
+                            </div>
+
+                            <div className="flex items-center gap-2 text-base text-gray-700 dark:text-gray-300 font-bold bg-gray-100 dark:bg-gray-700 px-6 py-3 rounded-xl">
+                              <HiLightningBolt
+                                className="text-yellow-500"
+                                size={20}
+                              />
+                              {project.achievement}
+                            </div>
+                          </div>
+                        </div>
+
+                        <motion.div
+                          className={`absolute inset-0 bg-gradient-to-r ${project.gradient} opacity-0 group-hover:opacity-20 transition-opacity duration-500 blur-2xl -z-10`}
+                        />
+                      </motion.div>
+                    ))}
+                  </motion.div>
+                </AnimatePresence>
+              </div>
+
+              {/* Right Navigation Button */}
+              <motion.button
+                onClick={() => {
+                  setDirection(1);
+                  setCurrentProject((prev) => (prev + 1) % projects.length);
+                }}
+                whileHover={{ scale: 1.15, x: 5 }}
+                whileTap={{ scale: 0.9 }}
+                className="w-20 h-20 bg-white dark:bg-gray-800 rounded-full shadow-2xl flex items-center justify-center text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors border-4 border-white/20 dark:border-gray-700/20 z-10"
+              >
+                <span className="text-4xl font-bold">→</span>
+              </motion.button>
             </div>
           </div>
         </section>
