@@ -440,7 +440,7 @@ const Portfolio = () => {
                 <motion.a
                   whileHover={{ scale: 1.1, y: -8 }}
                   whileTap={{ scale: 0.95 }}
-                  href="/Meet_Adlakha_Resume.pdf"
+                  href="/resume.pdf"
                   download="Meet_Adlakha_Resume.pdf"
                   className="group relative px-12 py-6 rounded-2xl font-black text-xl text-white overflow-hidden shadow-2xl"
                 >
